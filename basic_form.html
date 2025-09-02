@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HTML Form Example</title>
+  <script>
+    function handleSubmit(event) {
+      event.preventDefault(); // stop real submit
+      
+      // Get form data
+      const form = event.target;
+      const data = new FormData(form);
+      const params = new URLSearchParams(data).toString();
+      
+      // Show what API call would look like
+      const apiCall = `
+Method: ${form.method.toUpperCase()}
+URL: ${form.action}${form.method.toLowerCase() === "get" ? "?" + params : ""}
+Body: ${form.method.toLowerCase() === "post" ? params : "(none)"}
+      `;
+      
+      document.getElementById("output").innerText = apiCall;
+    }
+  </script>
+</head>
+<body>
+
+<h2>Basic HTML Form</h2>
+
+<form action="/submit" method="post" onsubmit="handleSubmit(event)">
+  <!-- Text input -->
+  <label for="first_name">First Name:</label>
+  <input type="text" id="first_name" name="first_name" required>
+
+
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password">
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email">
+
+  <label for="file">Upload File:</label>
+  <input type="file" id="file" name="file">
+
+  <p>Choose a plan:</p>
+  <input type="radio" id="basic" name="plan" value="basic">
+  <label for="basic">Basic</label>
+  <input type="radio" id="pro" name="plan" value="pro">
+  <label for="pro">Pro</label>
+
+  <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+  <label for="subscribe">Subscribe to newsletter</label>
+
+  <label for="country">Country:</label>
+  <select id="country" name="country">
+    <option value="ca">Canada</option>
+    <option value="us">USA</option>
+    <option value="uk">UK</option>
+  </select>
+  <label for="comments">Comments:</label>
+  <textarea id="comments" name="comments" rows="4" cols="40"></textarea>
+  <div><input type="submit" value="Submit Form"></div>
+</form>
+
+<h3>Simulated API Call:</h3>
+<pre id="output">(Will appear here after submitting)</pre>
+
+</body>
+</html>
